@@ -1,3 +1,4 @@
+import Image from 'next/image';
 type Artist = {
   id: number;
   name: string;
@@ -12,9 +13,11 @@ export default function ArtistCard({ artist }: { artist: Artist }) {
     <div className="bg-white/80 border border-gray-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col sm:flex-row sm:items-center p-4 gap-4">
       {/* Image: Circle, contained, luxury shadow */}
       <div className="flex-shrink-0 flex justify-center items-center">
-        <img
+        <Image
           src={artist.image}
           alt={artist.name}
+          width={100}
+          height={100}
           className="w-28 h-28 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-white shadow-md"
           style={{ background: "#f6f3ff" }}
         />

@@ -2,17 +2,39 @@
 
 import { useState, useEffect } from 'react';
 
-export default function FilterBlock({ setFiltered, original }: any) {
+// Define a proper type for artist data
+type Artist = {
+  id: number;
+  name: string;
+  category: string;
+  priceRange: string;
+  location: string;
+  image: string;
+};
+
+type FilterBlockProps = {
+  original: Artist[];
+  setFiltered: (data: Artist[]) => void;
+};
+
+export default function FilterBlock({ setFiltered, original }: FilterBlockProps) {
   const [category, setCategory] = useState('');
   const [location, setLocation] = useState('');
 
-  // Filter automatically on change
+  // Filter logic
   useEffect(() => {
     let result = original;
-    if (category) result = result.filter((a: any) => a.category === category);
-    if (location) result = result.filter((a: any) =>
-      a.location.toLowerCase().includes(location.toLowerCase())
-    );
+
+    if (category) {
+      result = result.filter((a) => a.category === category);
+    }
+
+    if (location) {
+      result = result.filter((a) =>
+        a.location.toLowerCase().includes(location.toLowerCase())
+      );
+    }
+
     setFiltered(result);
   }, [category, location, original, setFiltered]);
 
@@ -25,14 +47,16 @@ export default function FilterBlock({ setFiltered, original }: any) {
   return (
     <form
       className="flex flex-col sm:flex-row gap-4 items-stretch"
-      onSubmit={e => e.preventDefault()}
+      onSubmit={(e) => e.preventDefault()}
       aria-label="Filter Artists"
     >
-      <label className="sr-only" htmlFor="category">Category</label>
+      <label className="sr-only" htmlFor="category">
+        Category
+      </label>
       <select
         id="category"
         value={category}
-        onChange={e => setCategory(e.target.value)}
+        onChange={(e) => setCategory(e.target.value)}
         className="border border-gray-200 rounded-lg px-4 py-2 bg-white/60 backdrop-blur placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 transition"
       >
         <option value="">Category</option>
@@ -42,18 +66,20 @@ export default function FilterBlock({ setFiltered, original }: any) {
         <option value="DJs">DJs</option>
       </select>
 
-      <label className="sr-only" htmlFor="location">Location</label>
+      <label className="sr-only" htmlFor="location">
+        Location
+      </label>
       <input
         id="location"
         type="text"
         placeholder="Location"
         value={location}
-        onChange={e => setLocation(e.target.value)}
+        onChange={(e) => setLocation(e.target.value)}
         className="border border-gray-200 rounded-lg px-4 py-2 bg-white/60 backdrop-blur placeholder-gray-400 focus:ring-2 focus:ring-indigo-400 transition"
         autoComplete="off"
       />
 
-      {(category || location) ? (
+      {(category || location) && (
         <button
           type="button"
           onClick={clearFilters}
@@ -61,14 +87,9 @@ export default function FilterBlock({ setFiltered, original }: any) {
         >
           Clear
         </button>
-      ) : null}
+      )}
 
-      {/* Looks like a button but is hidden on mobile if filters are auto */}
-      <button
-        type="submit"
-        className="hidden"
-        aria-hidden="true"
-      >
+      <button type="submit" className="hidden" aria-hidden="true">
         Filter
       </button>
     </form>

@@ -1,19 +1,10 @@
-import * as Yup from 'yup';
+import * as yup from 'yup';
 
-export const artistSchema = Yup.object({
-  name: Yup.string().required('Name is required'),
-  bio: Yup.string().required('Bio is required'),
-  category: Yup.array()
-    .of(Yup.string())
-    .min(1, 'Select at least one category'),
-  languages: Yup.array()
-    .of(Yup.string())
-    .min(1, 'Select at least one language'),
-  feeMin: Yup.number()
-    .min(0, 'Minimum fee must be at least 0')
-    .required('Minimum fee is required'),
-  feeMax: Yup.number()
-    .min(Yup.ref('feeMin'), 'Maximum fee must be greater than or equal to minimum fee')
-    .required('Maximum fee is required'),
-  location: Yup.string().required('Location is required'),
+export const artistSchema = yup.object().shape({
+  name: yup.string().required('Name is required'),
+  bio: yup.string().required('Bio is required'),
+  category: yup.array().min(1, 'Select at least one category'),
+  languages: yup.array().min(1, 'Select at least one language'),
+  fee: yup.string().required('Fee is required'),
+  location: yup.string().required('Location is required'),
 });

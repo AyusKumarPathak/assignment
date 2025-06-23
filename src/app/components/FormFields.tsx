@@ -1,124 +1,82 @@
-import { useFormikContext, Field, ErrorMessage } from 'formik';
-import { useRef, useState } from 'react';
+'use client';
 
-const categories = ['Singers', 'Dancers', 'Speakers', 'DJs'];
-const languages = ['English', 'Hindi', 'Telugu', 'Tamil'];
-const feeRanges = [
-  { label: '20k–50k', value: '20k-50k' },
-  { label: '50k–1L', value: '50k-1L' },
-  { label: '1L+', value: '1L+' },
-];
+import { UseFormRegister, FieldErrors } from 'react-hook-form';
 
-export default function FormFields() {
-  const { values, setFieldValue } = useFormikContext();
-  const [preview, setPreview] = useState(null);
-  const fileInputRef = useRef();
+type ArtistFormData = {
+  name: string;
+  bio: string;
+  category: string[]; 
+  languages: string[]; 
+  fee: string;
+  location: string;
+};
 
-  // Handle image preview
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setFieldValue('image', file);
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setPreview(reader.result);
-      reader.readAsDataURL(file);
-    } else {
-      setPreview(null);
-    }
-  };
+type Props = {
+  register: UseFormRegister<ArtistFormData>;
+  errors: FieldErrors<ArtistFormData>;
+};
 
-  // Multi-select dropdown with checkboxes for Category/Languages
-  const MultiSelect = ({ label, name, options }) => {
-    const [open, setOpen] = useState(false);
-    return (
-      <div className="relative">
-        <label className="font-semibold mb-1 block">{label}</label>
-        <button
-          type="button"
-          className="w-full border rounded-lg px-4 py-2 bg-white/80 text-left"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {values[name]?.length
-            ? values[name].join(', ')
-            : `Select ${label.toLowerCase()}`}
-        </button>
-        {open && (
-          <div className="absolute z-10 mt-2 w-full bg-white border rounded-lg shadow-lg max-h-48 overflow-auto">
-            {options.map((opt) => (
-              <label key={opt} className="flex items-center px-4 py-2 hover:bg-gray-50 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={values[name]?.includes(opt)}
-                  onChange={() => {
-                    if (values[name]?.includes(opt)) {
-                      setFieldValue(name, values[name].filter((v) => v !== opt));
-                    } else {
-                      setFieldValue(name, [...(values[name] || []), opt]);
-                    }
-                  }}
-                  className="accent-indigo-500 mr-2"
-                />
-                {opt}
-              </label>
-            ))}
-          </div>
-        )}
-        <ErrorMessage name={name} component="div" className="text-red-500 text-sm mt-1" />
-      </div>
-    );
-  };
+export default function FormFields({ register, errors }: Props) {
+  const categories = ['Singers', 'Dancers', 'Speakers', 'DJs'];
+  const languages = ['English', 'Hindi', 'Telugu', 'Tamil'];
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="space-y-6">
       {/* Name */}
       <div>
-        <Field name="name" placeholder="Name" className="input w-full" />
-        <ErrorMessage name="name" component="div" className="text-red-500 text-sm" />
+        <input {...register('name')} placeholder="Name" className="input w-full" />
+        <p className="text-red-500 text-sm mt-1">{errors.name?.message}</p>
       </div>
 
       {/* Bio */}
       <div>
-        <Field as="textarea" name="bio" placeholder="Bio" className="input w-full min-h-[80px]" />
-        <ErrorMessage name="bio" component="div" className="text-red-500 text-sm" />
+        <textarea {...register('bio')} placeholder="Bio" className="input w-full" rows={4} />
+        <p className="text-red-500 text-sm mt-1">{errors.bio?.message}</p>
       </div>
 
-      {/* Category Multi-select */}
-      <MultiSelect label="Category" name="category" options={categories} />
-
-      {/* Languages Multi-select */}
-      <MultiSelect label="Languages Spoken" name="languages" options={languages} />
-
-      {/* Fee Range Dropdown */}
+      {/* Categories */}
       <div>
-        <label className="font-semibold mb-1 block">Fee Range</label>
-        <Field as="select" name="fee" className="input w-full">
-          <option value="">Select Fee Range</option>
-          {feeRanges.map((f) => (
-            <option key={f.value} value={f.value}>{f.label}</option>
+        <label className="block font-medium text-gray-700 mb-2">Category</label>
+        <div className="grid grid-cols-2 gap-2">
+          {categories.map((cat) => (
+            <label key={cat} className="inline-flex items-center gap-2">
+              <input type="checkbox" value={cat} {...register('category')} />
+              {cat}
+            </label>
           ))}
-        </Field>
-        <ErrorMessage name="fee" component="div" className="text-red-500 text-sm" />
+        </div>
+        <p className="text-red-500 text-sm mt-1">{errors.category?.message}</p>
       </div>
 
-      {/* Profile Image Upload */}
+      {/* Languages */}
       <div>
-        <label className="font-semibold mb-1 block">Profile Image (optional)</label>
-        <input
-          type="file"
-          accept="image/*"
-          ref={fileInputRef}
-          onChange={handleImageChange}
-          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
-        />
-        {preview && (
-          <img src={preview} alt="Preview" className="mt-2 w-24 h-24 rounded-full object-cover border" />
-        )}
+        <label className="block font-medium text-gray-700 mb-2">Languages</label>
+        <div className="grid grid-cols-2 gap-2">
+          {languages.map((lang) => (
+            <label key={lang} className="inline-flex items-center gap-2">
+              <input type="checkbox" value={lang} {...register('languages')} />
+              {lang}
+            </label>
+          ))}
+        </div>
+        <p className="text-red-500 text-sm mt-1">{errors.languages?.message}</p>
+      </div>
+
+      {/* Fee */}
+      <div>
+        <select {...register('fee')} className="input w-full">
+          <option value="">Select Fee</option>
+          <option value="20k-50k">20k–50k</option>
+          <option value="50k-1L">50k–1L</option>
+          <option value="1L+">1L+</option>
+        </select>
+        <p className="text-red-500 text-sm mt-1">{errors.fee?.message}</p>
       </div>
 
       {/* Location */}
       <div>
-        <Field name="location" placeholder="Location" className="input w-full" />
-        <ErrorMessage name="location" component="div" className="text-red-500 text-sm" />
+        <input {...register('location')} placeholder="Location" className="input w-full" />
+        <p className="text-red-500 text-sm mt-1">{errors.location?.message}</p>
       </div>
     </div>
   );

@@ -42,12 +42,21 @@ export default function HomePage() {
             Luxury Event Management
           </span>
         </h1>
-        <p className="max-w-2xl mx-auto text-lg sm:text-xl text-gray-700 mb-10">
-          Experience the pinnacle of elegance and artistry with <span className="font-bold text-gradient-gold">Artistly</span>. 
-          We curate India's most exclusive events, featuring world-class performers and seamless service. 
-          From star-studded galas to intimate soirées, our handpicked roster of singers, dancers, speakers, and DJs ensures your occasion is as unforgettable as it is luxurious.
-        </p>
-        <Link
+ <p className="max-w-3xl mx-auto text-lg sm:text-xl text-gray-700 mb-10 text-center leading-relaxed">
+  <span className="font-medium">
+    Experience the pinnacle of elegance and artistry with
+  </span>{' '}
+  <span className="font-extrabold bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-600 bg-clip-text text-transparent">
+    Artistly
+  </span>
+  . We curate
+  <span className="font-semibold text-gray-800"> India&rsquo;s most exclusive events</span>, featuring
+  <span className="font-semibold text-gray-800"> world-class performers</span> and seamless service. <br className="hidden sm:block" />
+  From star-studded galas to intimate soirées, our handpicked roster of
+  <span className="text-indigo-600 font-semibold"> singers, dancers, speakers, and DJs</span>{' '}
+  ensures your occasion is as unforgettable as it is luxurious.
+</p>
+   <Link
           href="/artists"
           className="inline-block bg-gradient-to-r from-yellow-400 via-pink-500 to-indigo-500 text-white px-12 py-4 rounded-full font-semibold text-lg shadow-xl hover:scale-105 hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-yellow-300"
         >
