@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import data from '../data/artists.json';
 import ArtistCard from '../components/ArtistCard';
 import FilterBlock from '../components/FilterBlock';
