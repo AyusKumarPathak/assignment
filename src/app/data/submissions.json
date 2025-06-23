@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Asha Singh",
+    "category": ["Singers"],
+    "location": "Mumbai",
+    "fee": "50k-1L"
+  },
+  {
+    "id": 2,
+    "name": "Raj Patel",
+    "category": ["Dancers"],
+    "location": "Delhi",
+    "fee": "30k-70k"
+  }
+]

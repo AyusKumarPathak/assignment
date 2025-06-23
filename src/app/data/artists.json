@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "Asha Singh",
+    "category": "Singers",
+    "priceRange": "50000-100000",
+    "location": "Mumbai",
+    "image": "/images/singer.png"
+  },
+  {
+    "id": 2,
+    "name": "Raj Patel",
+    "category": "Dancers",
+    "priceRange": "30000-70000",
+    "location": "Delhi",
+    "image": "/images/dancer.png"
+  },
+  {
+    "id": 3,
+    "name": "Neha Kumar",
+    "category": "Speakers",
+    "priceRange": "40000-80000",
+    "location": "Bangalore",
+    "image": "/images/speaker.png"
+  },
+  {
+    "id": 4,
+    "name": "DJ Arjun",
+    "category": "DJs",
+    "priceRange": "60000-120000",
+    "location": "Goa",
+    "image": "/images/dj.png"
+  }
+]
